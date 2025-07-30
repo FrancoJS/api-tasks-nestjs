@@ -21,7 +21,9 @@ export class UserService {
       if (userExists) {
         throw new ConflictException('El usuario ya existe');
       }
-      await this.userRepository.save(user);
+
+      const newUser = this.userRepository.create(user);
+      await this.userRepository.save(newUser);
       return 'El usuario ha sido creado';
     } catch (error) {
       if (error instanceof ConflictException) {
